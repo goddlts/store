@@ -20,7 +20,7 @@
             <td>
               <a href="edit.html">edit</a>
               &nbsp;&nbsp;
-              <a href="javascript:window.confirm('Are you sure?')">delete</a>
+              <a href="javascript:void(0)" @click.prevent="handleDelete(item.id)">delete</a>
             </td>
           </tr>
         </tbody>
@@ -40,16 +40,39 @@ export default {
     };
   },
   mounted() {
-    // 发送请求
-    axios.get('http://localhost:3000/heroes')
-      .then((res) => {
-        if (res.status === 200) {
-          this.list = res.data;
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // 加载列表
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      // 发送请求
+      axios.get('http://localhost:3000/heroes')
+        .then((res) => {
+          if (res.status === 200) {
+            this.list = res.data;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    handleDelete(id) {
+      // 删除提示
+      if (!confirm('是否确认删除数据')) {
+        return;
+      }
+      // 发送请求，删除数据
+      axios.delete(`http://localhost:3000/heroes/${id}`)
+        .then((res) => {
+          if (res.status === 200) {
+            // 删除成功
+            this.loadData();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
   }
 };
 </script>
