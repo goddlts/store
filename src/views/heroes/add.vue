@@ -3,31 +3,46 @@
     <h2 class="sub-header">添加英雄</h2>
     <form>
       <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+        <label for="name">英雄名称</label>
+        <input v-model="formData.name" type="text" class="form-control" id="name" placeholder="英雄名称">
       </div>
       <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <label for="gender">英雄性别</label>
+        <input v-model="formData.gender" type="text" class="form-control" id="gender" placeholder="英雄性别">
       </div>
-      <div class="form-group">
-        <label for="exampleInputFile">File input</label>
-        <input type="file" id="exampleInputFile">
-        <p class="help-block">Example block-level help text here.</p>
-      </div>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox"> Check me out
-        </label>
-      </div>
-      <button type="submit" class="btn btn-success">Submit</button>
+      <button @click.prevent="handleAdd" type="submit" class="btn btn-success">Submit</button>
     </form>
   </div>
 </template>
 
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+  data() {
+    return {
+      formData: {
+        name: '',
+        gender: ''
+      }
+    }
+  },
+  methods: {
+    handleAdd() {
+      axios.post('http://localhost:3000/heroes', this.formData)
+        .then((res) => {
+          if (res.status === 201) {
+            // 添加成功
+            this.$router.push({
+              name: 'heroes'
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
 };
 </script>
 
