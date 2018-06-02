@@ -35,7 +35,7 @@ export default {
   methods: {
     loadData() {
       // 发送请求，获取当前要编辑的英雄对象
-      this.$http.get(`http://localhost:3000/heroes/${this.id}`)
+      this.$http.get(`/heroes/${this.id}`)
         .then((res) => {
           if (res.status === 200) {
             this.formData = res.data;
@@ -46,7 +46,7 @@ export default {
         });
     },
     handleEdit() {
-      this.$http.patch(`http://localhost:3000/heroes/${this.id}`, this.formData)
+      this.$http.patch(`/heroes/${this.id}`, this.formData)
         .then((res) => {
           if (res.status === 200) {
             // 修改成功

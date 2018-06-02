@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     handleAdd() {
-      this.$http.post('http://localhost:3000/heroes', this.formData)
+      this.$http.post('/heroes', this.formData)
         .then((res) => {
           if (res.status === 201) {
             // 添加成功
