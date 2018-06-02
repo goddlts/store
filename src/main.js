@@ -12,6 +12,16 @@ import 'bootstrap/dist/css/bootstrap.css';
 // 导入css模块
 import '@/assets/css/index.css';
 
+// 原始的写法
+// import axios from 'axios';
+// // 让Vue实例中可以直接拿到axios对象
+// Vue.prototype.$http = axios;
+
+// 插件的使用
+import MyAxios from '@/plugins/myaxios';
+// Vue.use()内部调用了 MyAxios.install方法
+Vue.use(MyAxios);
+
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
